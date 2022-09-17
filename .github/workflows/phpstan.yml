@@ -1,0 +1,45 @@
+name: LaraStan
+on:
+  # Executed when pushed to GitHub
+  push:
+    branches:
+      # Only branch names beginning with "TEST-" are considered
+      - TEST-*
+
+jobs:
+  phpstan:
+    # Use the latest version of Ubuntu
+    runs-on: ubuntu-latest
+    steps:
+      # Check out only one generation of the latest files in the repository
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      # Setup of PHP environment
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          # Specify PHP version 7.4
+          php-version: '7.4'
+          tools: composer, cs2pr, phpstan
+          coverage: none
+
+      # - name: Composer install
+      #   run: composer install
+
+      # phpstan is in setup-php but Larastan does not seem to be there,
+      # so it is installed separately
+      # - name: phpstan install
+      #   run: composer require nunomaduro/larastan --dev
+
+      # Get only the files in the repository that have been changed by this push,
+      # and get the strings connected by spaces.
+      - name: Get changed files
+        id: changed-files
+        uses: tj-actions/changed-files@v29.0.3
+
+      # Execute PHPStan. The analysis level is set to 0, the lowest of 10 levels, 
+      # and the variables in the list of file names obtained above are used as the analysis targets.
+      - name: Run PHPStan
+        run: phpstan analyze --memory-limit=-1 -l 0 ${{ steps.changed-files.outputs.all_changed_files }}
