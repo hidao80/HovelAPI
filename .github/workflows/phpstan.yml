@@ -1,4 +1,4 @@
-name: LaraStan
+name: PHPStan
 on:
   # Executed when pushed to GitHub
   push:
