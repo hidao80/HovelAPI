@@ -1,42 +1,45 @@
 name: LaraStan
 on:
-  # GitHubにPushしたときに実行
+  # Executed when pushed to GitHub
   push:
     branches:
-      # ブランチ名が"TEST-"で始まるもののみを対象とする
+      # Only branch names beginning with "TEST-" are considered
       - TEST-*
 
 jobs:
   phpstan:
-    # Ubuntuの最新版を利用する
+    # Use the latest version of Ubuntu
     runs-on: ubuntu-latest
     steps:
-      # リポジトリの最新ファイル1世代分だけをチェックアウト
+      # Check out only one generation of the latest files in the repository
       - uses: actions/checkout@v2
         with:
           fetch-depth: 0
 
-      # PHP環境のセットアップ
+      # Setup of PHP environment
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
-          # PHPのバージョンを7.4に指定
+          # Specify PHP version 7.4
           php-version: '7.4'
-          tools: composer, cs2pr
+          tools: composer, cs2pr, phpstan
           coverage: none
 
       # - name: Composer install
       #   run: composer install
 
-      # setup-phpにphpstanはあるがLarastanがなさそうなので、個別にインストール
-      - name: Larastan install
-        run: composer require nunomaduro/larastan --dev
+      # phpstan is in setup-php but Larastan does not seem to be there,
+      # so it is installed separately
+      # - name: phpstan install
+      #   run: composer require nunomaduro/larastan --dev
 
-      # リポジトリの中で今回のPushで変更があったファイルだけを取得し、スペースでつなげた文字列を取得する
+      # Get only the files in the repository that have been changed by this push,
+      # and get the strings connected by spaces.
       - name: Get changed files
         id: changed-files
         uses: tj-actions/changed-files@v29.0.3
 
-      # PHPStanを実行。解析レベルは10段階中最低の0とし、解析対象は上で取得したファイル名リストの変数を使う
+      # Execute PHPStan. The analysis level is set to 0, the lowest of 10 levels, 
+      # and the variables in the list of file names obtained above are used as the analysis targets.
       - name: Run PHPStan
-        run: vendor/bin/phpstan analyze --memory-limit=-1 -l 0 -c vendor/nunomaduro/larastan/extension.neon  ${{ steps.changed-files.outputs.all_changed_files }}
+        run: vendor/bin/phpstan analyze --memory-limit=-1 -l 0 -c ${{ steps.changed-files.outputs.all_changed_files }}
