@@ -28,7 +28,7 @@ See [the AltoRouter site](http://altorouter.com/) for more information on how ro
 You can make it multilingual by putting pairs of keywords and translations into the `$message` associative array in `app/lang/{LANGUAGE_NAME}.php`.  
 The contents of the `HTTP_ACCEPT_LANGUAGE` header are referenced to automatically switch dictionary files.
 
-BASIC authentication accounts for access restrictions are registered in the $hashes associative array in `conifg/auth.php`.
+BASIC authentication accounts for access restrictions are registered in the `$hashes` associative array in `conifg/auth.php`.
 The hashes are created as follows:
 
 ```sh
@@ -47,14 +47,14 @@ echo -n "user_name:password_string" | base64
 Describe the route in `routes/api.php`.
 
 Declare functions to be executed when route is accessed in `app/api/v1/functions.php`.  
-You may also directly describe the process in an anonymous function in route without declaring it in `functions.php`.
+You may also directly describe the process in an anonymous function in route without declaring it in `app/api/v1/functions.php`.
 
 Change the BASIC authentication account from the default one.
 
 Access with a basic authentication header from `curl`, javascript's `fetch()`, or jQuery's `$.ajax()`.
 
 Register messages in the dictionary file for multilingualization if necessary.  
-You can also use a function without a dictionary file by writing messages directly into the function.
+You can also use a function without a dictionary file by writing messages directly into the source code.
 
 You are free to add more routes files, dictionary files, and api files.
 
