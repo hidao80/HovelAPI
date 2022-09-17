@@ -42,4 +42,4 @@ jobs:
       # Execute PHPStan. The analysis level is set to 0, the lowest of 10 levels, 
       # and the variables in the list of file names obtained above are used as the analysis targets.
       - name: Run PHPStan
-        run: vendor/bin/phpstan analyze --memory-limit=-1 -l 0 ${{ steps.changed-files.outputs.all_changed_files }}
+        run: phpstan analyze --memory-limit=-1 -l 0 ${{ steps.changed-files.outputs.all_changed_files }}
