@@ -2,7 +2,7 @@
 
 ![Framework None](https://img.shields.io/badge/Framework-None-blue.svg)
 [![License](https://img.shields.io/github/license/hidao80/HovelAPI)](/LICENSE)
-![phpstan workflow](https://github.com/hidao80/HovelAPI/actions/workflows/larastan.yml/badge.svg)
+![phpstan workflow](https://github.com/hidao80/HovelAPI/actions/workflows/phpstan.yml/badge.svg)
 
 ## Install
 
