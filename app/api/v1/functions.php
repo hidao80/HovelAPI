@@ -1,14 +1,6 @@
 <?php
 /**
  * User data API definition.
- * 
- * PHP Version >= 7.4
- * 
- * @category Controller
- * @package  HovelAPI
- * @author   hidao80 <hidao@misskey.dev>
- * @license  MIT License
- * @link     https://github.com/hidao80/HovelAPI
  */
 
 /**
@@ -18,7 +10,7 @@
  * 
  * @return string JSON data
  */
-function getUser(int $id): string
+function getUserJson(int $id): string
 {
     $userNmae = [
         1 => 'Chris', 
