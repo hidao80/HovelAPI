@@ -25,8 +25,8 @@ jobs:
           tools: composer, cs2pr
           coverage: none
 
-      - name: Composer install
-        run: composer install
+      # - name: Composer install
+      #   run: composer install
 
       # setup-phpにphpstanはあるがLarastanがなさそうなので、個別にインストール
       - name: Larastan install
